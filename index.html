@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прайс-лист художницы</title>
+    <style>
+        /* --- Базовые настройки --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #faf8f5;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #2c2c2c;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #ffffff;
+            padding: 50px 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            border-radius: 24px;
+            border: 1px solid #f0ebe4;
+        }
+
+        /* --- Заголовок --- */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px dashed #e0d6cc;
+            padding-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 34px;
+            font-weight: normal;
+            letter-spacing: 3px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            color: #7a6e64;
+            font-style: italic;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .header .emoji-brush {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* --- Блоки категорий --- */
+        .category {
+            margin-bottom: 48px;
+            page-break-inside: avoid; /* Чтобы таблица не разрывалась внутри */
+        }
+
+        .category-title {
+            display: inline-block;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            background: #f3efe9;
+            padding: 6px 24px;
+            border-radius: 30px;
+            color: #3d352e;
+            margin-bottom: 25px;
+            border: 1px solid #e3dbd1;
+        }
+
+        /* --- Таблица (Сетка) --- */
+        .price-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1.2fr 1fr;
+            gap: 8px 0;
+            border-top: 1px solid #ede8e2;
+        }
+
+        .grid-header {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #9a8c80;
+            padding: 12px 10px 8px 10px;
+            border-bottom: 1px solid #ede8e2;
+            font-weight: bold;
+        }
+
+        .grid-item {
+            padding: 14px 10px;
+            border-bottom: 1px solid #f4f0eb;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .col-format {
+            font-weight: 600;
+            color: #1f1b17;
+        }
+
+        .col-desc {
+            color: #5a5047;
+            font-size: 14px;
+        }
+
+        .col-price {
+            font-family: 'Arial', sans-serif;
+            font-weight: 600;
+            font-size: 18px;
+            color: #3d2b1f;
+            justify-content: flex-end;
+            padding-right: 15px;
+        }
+
+        .col-type {
+            font-size: 13px;
+            color: #8f7e6e;
+            background: #faf8f5;
+            padding: 14px 10px;
+            border-bottom: 1px solid #f4f0eb;
+            text-transform: lowercase;
+            font-variant: small-caps;
+            letter-spacing: 0.5px;
+        }
+
+        .badge {
+            font-size: 10px;
+            padding: 3px 12px;
+            border-radius: 20px;
+            background: #ece6df;
+            color: #4f4036;
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-color {
+            background: #f0e4d8;
+            border-left: 3px solid #b8a084;
+        }
+
+        .badge-full {
+            background: #e3dbd1;
+            border-left: 3px solid #7a6556;
+            font-weight: bold;
+        }
+
+        /* --- Блок примечаний --- */
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px dashed #e0d6cc;
+            text-align: center;
+            color: #7a6e64;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .footer-note span {
+            background: #f3efe9;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+        }
+
+        /* --- Галерея (примеры работ) --- */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .gallery img {
+            width: 200px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        /* --- Адаптивность под телефон --- */
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px 15px;
+            }
+
+            .price-grid {
+                grid-template-columns: 1fr 1.5fr 1fr;
+                gap: 5px;
+            }
+
+            .col-type {
+                display: none;
+            }
+
+            .grid-header:nth-child(3) {
+                display: none;
+            }
+
+            .col-price {
+                font-size: 16px;
+                padding-right: 5px;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+
+            .gallery img {
+                width: 130px;
+                height: 195px;
+            }
+        }
+
+        /* ============================================ */
+        /* === СТИЛИ ДЛЯ ПЕЧАТИ (PDF) === */
+        /* ============================================ */
+        @media print {
+            body {
+                background: white;
+                padding: 0.5cm;
+                margin: 0;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 0.5cm;
+                box-shadow: none;
+                border: none;
+                border-radius: 0;
+                background: white;
+            }
+
+            /* Убираем цветные подложки, делаем всё чёрно-белым, но аккуратно */
+            .category-title {
+                background: #eee;
+                border: 1px solid #aaa;
+                color: black;
+            }
+
+            .badge {
+                background: #ddd;
+                color: black;
+                border: 1px solid #999;
+            }
+
+            .badge-color, .badge-full {
+                background: #ddd;
+                border-left: 3px solid #666;
+            }
+
+            .col-type {
+                background: #f5f5f5;
+                color: #333;
+            }
+
+            .grid-header {
+                color: #333;
+            }
+
+            .col-desc {
+                color: #333;
+            }
+
+            .col-price {
+                color: #000;
+            }
+
+            /* Убираем тени у картинок */
+            .gallery img {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+
+            /* Убираем dashed линии, делаем сплошными */
+            .header {
+                border-bottom: 2px solid #aaa;
+            }
+
+            .footer-note {
+                border-top: 2px solid #aaa;
+            }
+
+            .footer-note span {
+                background: #eee;
+            }
+
+            /* Чтобы блоки не рвались */
+            .category {
+                page-break-inside: avoid;
+            }
+
+            /* Если хотите, чтобы каждый раздел начинался с новой страницы, раскомментируйте: */
+            /*
+            .category {
+                page-break-before: always;
+            }
+            .category:first-of-type {
+                page-break-before: auto;
+            }
+            */
+
+            /* Поля страницы */
+            @page {
+                margin: 1.5cm;
+            }
+
+            /* Убираем лишние фоны у контейнера */
+            .container {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ШАПКА -->
+        <div class="header">
+            <span class="emoji-brush">✦</span>
+            <h1>Прайс-лист</h1>
+            <p>— SORUNE —</p>
+            <p style="font-size: 14px; margin-top: 15px; color: #b3a395;">
+                ⚡ Цены указаны за <strong>1 персонажа</strong> на нейтральном фоне.<br>
+                Сложный фон / доп. персонажи обсуждаются отдельно.
+            </p>
+        </div>
+
+        <!-- ГАЛЕРЕЯ ПРИМЕРОВ (три картинки) -->
+        <div class="gallery">
+            <img src="https://sun9-62.userapi.com/s/v1/ig2/Uu4vxVjq4n49QhZJxsqVDU4HYd-4xSomptE64hA1UrAMVKVV1sTXGclC_1jvKl4VOCYVvvdBmFrkLbGJLt-IxrOp.jpg?quality=95&crop=0,0,1858,2560&as=32x44,48x66,72x99,108x149,160x220,240x331,360x496,480x661,540x744,640x882,720x992,1080x1488,1280x1764,1440x1984,1858x2560&from=bu&u=lSJT4pso89UqUrmHsuRnUKiqLZZk9N1fA8L43dgfyJs&cs=1858x0" alt="Пример 1">
+            <img src="https://sun9-79.userapi.com/s/v1/ig2/QUZo_jCTFBki7hQlsUqbU7OKOnIYryeq6rWHy-McRY-F664sUlAHgUVXdP-fVy854oY8BGhfqK26CZGttDO14IFb.jpg?quality=95&as=32x42,48x63,72x95,108x142,160x210,240x315,360x473,480x630,540x709,640x840,720x945,1080x1418,1280x1680,1440x1890,1950x2560&from=bu&u=4c9ofTYdzTfgyd1bh1kerOi44Pr4lWP0b15N6NHGHH0&cs=1950x0" alt="Пример 2">
+            <img src="https://sun9-18.userapi.com/s/v1/ig2/Vb0VTn0hNGEGuG_6qzVcQqvYGhmJXaOv7zffAm9JCr4WUHTxSvL1nuErdogQJFlCm0UgnDfDoIvZXyeT9yaCYBhF.jpg?quality=95&as=32x34,48x51,72x77,108x115,160x171,240x256,360x384,480x512,540x576,640x682,720x767,1080x1151,1280x1364,1440x1535,2231x2378&from=bu&u=93mmSsTOA2_K4H6xpTYrrGZSg6bZIDaAUW4wtDd29BM&cs=2231x0" alt="Пример 3">
+        </div>
+
+        <!-- БЛОК 1: СКЕТЧИ (Ч/Б) -->
+        <div class="category">
+            <div class="category-title">✦ Ч/Б скетчи</div>
+
+            <div class="price-grid">
+                <div class="grid-header">Формат</div>
+                <div class="grid-header">Описание</div>
+                <div class="grid-header">Тип</div>
+                <div class="grid-header">Цена</div>
+
+                <div class="grid-item col-format">Портрет</div>
+                <div class="grid-item col-desc">Плечи + голова</div>
+                <div class="grid-item col-type"><span class="badge">скетч</span></div>
+                <div class="grid-item col-price">400 ₽</div>
+
+                <div class="grid-item col-format">Поясной</div>
+                <div class="grid-item col-desc">По талию / руки</div>
+                <div class="grid-item col-type"><span class="badge">скетч</span></div>
+                <div class="grid-item col-price">500 ₽</div>
+
+                <div class="grid-item col-format">По бедра</div>
+                <div class="grid-item col-desc">Ниже талии, до середины бедра</div>
+                <div class="grid-item col-type"><span class="badge">скетч</span></div>
+                <div class="grid-item col-price">600 ₽</div>
+
+                <div class="grid-item col-format">Полный рост</div>
+                <div class="grid-item col-desc">Фигура полностью</div>
+                <div class="grid-item col-type"><span class="badge">скетч</span></div>
+                <div class="grid-item col-price">700 ₽</div>
+            </div>
+        </div>
+
+        <!-- БЛОК 2: ЦВЕТНЫЕ СКЕТЧИ -->
+        <div class="category">
+            <div class="category-title">✦ Цветные скетчи</div>
+
+            <div class="price-grid">
+                <div class="grid-header">Формат</div>
+                <div class="grid-header">Описание</div>
+                <div class="grid-header">Тип</div>
+                <div class="grid-header">Цена</div>
+
+                <div class="grid-item col-format">Портрет</div>
+                <div class="grid-item col-desc">Плечи + голова</div>
+                <div class="grid-item col-type"><span class="badge badge-color">цветной</span></div>
+                <div class="grid-item col-price">500 ₽</div>
+
+                <div class="grid-item col-format">Поясной</div>
+                <div class="grid-item col-desc">По талию / руки</div>
+                <div class="grid-item col-type"><span class="badge badge-color">цветной</span></div>
+                <div class="grid-item col-price">600 ₽</div>
+
+                <div class="grid-item col-format">По бедра</div>
+                <div class="grid-item col-desc">Ниже талии, до середины бедра</div>
+                <div class="grid-item col-type"><span class="badge badge-color">цветной</span></div>
+                <div class="grid-item col-price">700 ₽</div>
+
+                <div class="grid-item col-format">Полный рост</div>
+                <div class="grid-item col-desc">Фигура полностью</div>
+                <div class="grid-item col-type"><span class="badge badge-color">цветной</span></div>
+                <div class="grid-item col-price">800 ₽</div>
+            </div>
+        </div>
+
+        <!-- БЛОК 3: ПОЛНОЦЕННЫЕ РАБОТЫ -->
+        <div class="category">
+            <div class="category-title">✦ Полноценные работы</div>
+
+            <div class="price-grid">
+                <div class="grid-header">Формат</div>
+                <div class="grid-header">Описание</div>
+                <div class="grid-header">Тип</div>
+                <div class="grid-header">Цена</div>
+
+                <div class="grid-item col-format">Портрет</div>
+                <div class="grid-item col-desc">Детализированное лицо, волосы, фактура</div>
+                <div class="grid-item col-type"><span class="badge badge-full">full</span></div>
+                <div class="grid-item col-price">1000 ₽</div>
+
+                <div class="grid-item col-format">Поясной</div>
+                <div class="grid-item col-desc">По талию / руки</div>
+                <div class="grid-item col-type"><span class="badge badge-full">full</span></div>
+                <div class="grid-item col-price">1200 ₽</div>
+
+                <div class="grid-item col-format">По бедра</div>
+                <div class="grid-item col-desc">Ниже талии, до середины бедра</div>
+                <div class="grid-item col-type"><span class="badge badge-full">full</span></div>
+                <div class="grid-item col-price">1500 ₽</div>
+
+                <div class="grid-item col-format">Полный рост</div>
+                <div class="grid-item col-desc">Фигура полностью</div>
+                <div class="grid-item col-type"><span class="badge badge-full">full</span></div>
+                <div class="grid-item col-price">2000 ₽</div>
+            </div>
+        </div>
+
+        <!-- ДОПОЛНИТЕЛЬНО (сложные форматы) -->
+        <div class="category" style="margin-top: 10px;">
+            <div class="category-title">✦ Сложные форматы</div>
+            <div style="padding: 10px 0 5px 0; border-bottom: 1px solid #ede8e2; display: flex; justify-content: space-between; flex-wrap: wrap;">
+                <span style="font-weight: 600;">Доп. персонаж</span>
+                <span style="color: #5a5047;">+ 50 % к стоимости</span>
+                <span style="color: #9a8c80; font-size: 14px;">(или фикс)</span>
+            </div>
+            <div style="padding: 15px 0 5px 0; border-bottom: 1px solid #ede8e2; display: flex; justify-content: space-between; flex-wrap: wrap;">
+                <span style="font-weight: 600;">Детальный фон</span>
+                <span style="color: #5a5047;">+ 1000–1500 ₽</span>
+                <span style="color: #9a8c80; font-size: 14px;">(от сложности)</span>
+            </div>
+            <div style="padding: 15px 0 5px 0; display: flex; justify-content: space-between; flex-wrap: wrap;">
+                <span style="font-weight: 600;">Срочность (24ч)</span>
+                <span style="color: #5a5047;">× 2.5</span>
+                <span style="color: #9a8c80; font-size: 14px;">(коэффициент)</span>
+            </div>
+        </div>
+
+        <!-- ПОДВАЛ -->
+        <div class="footer-note">
+            <span>Условия</span><br>
+            • Предоплата 100% <br>
+            • Срок готовки: от 14 до 60 дней (зависит от очереди) <br>
+            • Бесплатные правки на этапе скетча, далее 100 рублей за правку <br><br>
+            <span style="background: none; font-size: 22px;">✧</span>
+        </div>
+
+    </div>
+
+</body>
+</html>
